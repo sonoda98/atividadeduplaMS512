@@ -1,0 +1,1 @@
+Trabalho em dupla da disciplina de MS512, no PDF contido neste diretório é possível ver sua proposta/enunciados.
