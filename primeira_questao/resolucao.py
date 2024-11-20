@@ -38,13 +38,13 @@ print()
 
 #Resolver R x = Q^T b
 Qt_b = np.dot(Q.T, b)
-x = np.linalg.solve(R, Qt_b)
+xQR = np.linalg.solve(R, Qt_b)
 print("Solução de mínimos quadrados (x):")
-print(x)
+print(xQR)
 print()
 
 #Norma do resíduo
-residuoQR = np.linalg.norm(A @ x - b)
+residuoQR = np.linalg.norm(A @ xQR - b)
 print("Norma do residuo:")
 print(residuoQR)
 print()
@@ -67,14 +67,35 @@ print(cond_AtA)
 print()
 
 #Resolver eq normal
-x = np.linalg.solve(AtA, Atb)
+xNormal = np.linalg.solve(AtA, Atb)
 print("Solução eq normal (x):")
-print(x)
+print(xNormal)
 print()
 
 #Norma do resíduo
-residuoNormal = np.linalg.norm(A @ x - b)
+residuoNormal = np.linalg.norm(A @ xNormal - b)
 print("Norma do residuo (eq normal):")
 print(residuoNormal)
 print()
 
+print("Item c)----------------------------------------------------------------")
+#Extraindo colunas dos dados
+t = data[:, 0]
+y = data[:, 1]
+
+#Gerando pontos de x para as retas
+x_vals = np.linspace(0.9876543, 0.9876544, 10)
+
+#Gerando os pontos de y para cada um dos métodos
+yQR = xQR[0] + xQR[1] * x_vals
+yNormal = xNormal[0] + xNormal[1] * x_vals
+
+
+plt.plot(t, y, 'o', label="Data", color="black")
+
+plt.plot(x_vals, yQR, label="Solução QR", linestyle='-', color="blue")
+
+plt.plot(x_vals, yNormal, label="Solução Normal", linestyle='--', color="red")
+
+plt.legend(loc="best")
+plt.show()
