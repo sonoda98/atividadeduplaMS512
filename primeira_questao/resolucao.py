@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 #Leitura do csv
 data = np.loadtxt("./data.csv", delimiter=',')
@@ -21,9 +22,9 @@ print(b)
 print()
 
 #Número de condicionamento de A
-cond_number = np.linalg.cond(A)
+cond_A = np.linalg.cond(A)
 print("Número de condicionamento de A:")
-print(cond_number)
+print(cond_A)
 print()
 
 #Fatoração QR
@@ -43,10 +44,37 @@ print(x)
 print()
 
 #Norma do resíduo
-residuo = np.linalg.norm(A @ x - b)
+residuoQR = np.linalg.norm(A @ x - b)
 print("Norma do residuo:")
-print(residuo)
+print(residuoQR)
 print()
 
 print("Item b)----------------------------------------------------------------")
 #Calculando A^T A e A^T b
+AtA = np.dot(A.T, A)
+Atb = np.dot(A.T, b)
+print("Matriz A^T A (coeficientes):")
+print(AtA)
+print()
+print("Vetor A^T b (lado direito):")
+print(Atb)
+print()
+
+#Número de cond de AtA
+cond_AtA = np.linalg.cond(AtA)
+print("Número de condicionamento da matriz A^T A:")
+print(cond_AtA)
+print()
+
+#Resolver eq normal
+x = np.linalg.solve(AtA, Atb)
+print("Solução eq normal (x):")
+print(x)
+print()
+
+#Norma do resíduo
+residuoNormal = np.linalg.norm(A @ x - b)
+print("Norma do residuo (eq normal):")
+print(residuoNormal)
+print()
+
