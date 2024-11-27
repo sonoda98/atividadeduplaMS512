@@ -99,3 +99,56 @@ plt.plot(x_vals, yNormal, label="Solução Normal", linestyle='--', color="red")
 
 plt.legend(loc="best")
 plt.show()
+
+print("Item d)----------------------------------------------------------------")
+# Base alternativa
+phi2_factor = 3 * 10**7
+shift = 0.98765435
+
+# Criando a matriz Â
+rows_alt = []
+for i in range(len(data)):
+    t = data[i, 0]
+    new_row_alt = [1, phi2_factor * (t - shift)]  # Base [1, 3*10^7*(t - 0.98765435)]
+    rows_alt.append(new_row_alt)
+A_alt = np.array(rows_alt)
+
+# Número de condicionamento de Â
+cond_A_alt = np.linalg.cond(A_alt)
+print("Número de condicionamento de Â:")
+print(cond_A_alt)
+print()
+
+# Fatoração QR para Â
+Q_alt, R_alt = np.linalg.qr(A_alt)
+Qt_b_alt = np.dot(Q_alt.T, b)
+xQR_alt = np.linalg.solve(R_alt, Qt_b_alt)
+print("Solução QR com base alternativa (x):")
+print(xQR_alt)
+print()
+
+# Norma do resíduo para QR
+residuoQR_alt = np.linalg.norm(A_alt @ xQR_alt - b)
+print("Norma do resíduo (QR - base alternativa):")
+print(residuoQR_alt)
+print()
+
+print("Item e)----------------------------------------------------------------")
+# Obtendo as equações normais para Â
+AtA_alt = np.dot(A_alt.T, A_alt)
+Atb_alt = np.dot(A_alt.T, b)
+cond_AtA_alt = np.linalg.cond(AtA_alt)
+print("Número de condicionamento de Â^T Â:")
+print(cond_AtA_alt)
+print()
+
+xNormal_alt = np.linalg.solve(AtA_alt, Atb_alt)
+print("Solução eq normal (base alternativa - x):")
+print(xNormal_alt)
+print()
+
+# Norma do resíduo para as equações normais
+residuoNormal_alt = np.linalg.norm(A_alt @ xNormal_alt - b)
+print("Norma do resíduo (eq normal - base alternativa):")
+print(residuoNormal_alt)
+print()
